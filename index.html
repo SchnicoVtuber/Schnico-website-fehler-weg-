@@ -42,47 +42,29 @@
 
         /* Animierter Rand-Effekt */
         ./* 1. Die Karte (Der Container) */
+        /* 1. Die Karte mit festem, lila Rand */
         .animated-card {
             position: relative;
+            background: var(--card-bg);
+            border: 2px solid rgba(145, 70, 255, 0.4); /* Dezenter lila Rand */
             border-radius: 15px;
             margin: 20px 0;
             width: 90%;
             max-width: 800px;
-            overflow: hidden; /* Verhindert, dass das Riesen-Quadrat übersteht */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
+            padding: 5px;
+            /* Hier wird das Pulsieren aktiviert */
+            animation: pulse-glow 4s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(145, 70, 255, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        /* 2. Das Licht - Ein riesiges Quadrat für absolut flüssige Drehung */
-        .animated-card::before {
-            content: "";
-            position: absolute;
-            width: 1500px; 
-            height: 1500px;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                transparent 300deg,
-                var(--twitch-purple) 340deg,
-                var(--twitch-purple) 360deg
-            );
-            animation: rotate 8s linear infinite; /* 8s für ein edles, langsames Gleiten */
-            z-index: 0;
+        /* 2. Kleiner Hover-Effekt: Die Karte hebt sich leicht ab */
+        .animated-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--twitch-purple);
         }
 
-        /* 3. Die dunkle Mitte (erzeugt die feine Linie) */
-        .animated-card::after {
-            content: "";
-            position: absolute;
-            inset: 3px; 
-            background: var(--card-bg);
-            border-radius: 13px;
-            z-index: 1;
-        }
-
-        /* 4. Der Inhalt (Text, Video etc.) */
+        /* 3. Der Inhalt */
         .card-content {
             position: relative;
             width: 100%;
@@ -90,10 +72,21 @@
             z-index: 2;
         }
 
-        /* 5. Die Animation (für alle Boxen jetzt absolut identisch) */
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* 4. Die Pulsieren-Animation */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 10px rgba(145, 70, 255, 0.2);
+                border-color: rgba(145, 70, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(145, 70, 255, 0.6); /* Helleres Leuchten */
+                border-color: rgba(145, 70, 255, 0.8);        /* Hellerer Rand */
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(145, 70, 255, 0.2);
+                border-color: rgba(145, 70, 255, 0.3);
+            }
+        }
         }
 
         /* Status Anzeige */
@@ -244,3 +237,4 @@
 </body>
 
 </html>
+
