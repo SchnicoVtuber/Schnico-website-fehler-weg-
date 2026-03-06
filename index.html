@@ -41,52 +41,59 @@
         }
 
         /* Animierter Rand-Effekt */
+        ./* 1. Die Karte (Der Container) */
         .animated-card {
             position: relative;
-            background: var(--card-bg);
             border-radius: 15px;
-            padding: 25px;
             margin: 20px 0;
             width: 90%;
             max-width: 800px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden; /* Verhindert, dass das Riesen-Quadrat übersteht */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
         }
 
-        /* Der laufende Licht-Effekt */
+        /* 2. Das Licht - Ein riesiges Quadrat für absolut flüssige Drehung */
         .animated-card::before {
             content: "";
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--twitch-purple));
-            animation: rotate 6s linear infinite;
-            z-index: 1;
+            width: 1500px; 
+            height: 1500px;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 300deg,
+                var(--twitch-purple) 340deg,
+                var(--twitch-purple) 360deg
+            );
+            animation: rotate 8s linear infinite; /* 8s für ein edles, langsames Gleiten */
+            z-index: 0;
         }
 
-        /* Innere Box, die den Content über das Licht legt */
-        .card-content {
-            position: relative;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            z-index: 2;
-        }
-
-        /* Damit die Karte selbst nicht zu dick wirkt */
+        /* 3. Die dunkle Mitte (erzeugt die feine Linie) */
         .animated-card::after {
             content: "";
             position: absolute;
-            inset: 2px; /* Dünnerer, edlerer Rand */
+            inset: 3px; 
             background: var(--card-bg);
             border-radius: 13px;
             z-index: 1;
         }
 
+        /* 4. Der Inhalt (Text, Video etc.) */
+        .card-content {
+            position: relative;
+            width: 100%;
+            padding: 15px;
+            z-index: 2;
+        }
+
+        /* 5. Die Animation (für alle Boxen jetzt absolut identisch) */
         @keyframes rotate {
-            100% { transform: rotate(360deg); }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* Status Anzeige */
@@ -235,4 +242,5 @@
     </script>
 
 </body>
+
 </html>
