@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchnicoVtuber | Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #161616;
+            --twitch-purple: #9146FF;
+            --accent-glow: #a970ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #eeeeee;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            width: 100%;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0b0b0b 100%);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--twitch-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(145, 70, 255, 0.3);
+        }
+
+        /* Animierter Rand-Effekt */
+        .animated-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            width: 90%;
+            max-width: 800px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Der laufende Licht-Effekt */
+        .animated-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, var(--twitch-purple));
+            animation: rotate 6s linear infinite;
+            z-index: 1;
+        }
+
+        /* Innere Box, die den Content über das Licht legt */
+        .card-content {
+            position: relative;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            z-index: 2;
+        }
+
+        /* Damit die Karte selbst nicht zu dick wirkt */
+        .animated-card::after {
+            content: "";
+            position: absolute;
+            inset: 2px; /* Dünnerer, edlerer Rand */
+            background: var(--card-bg);
+            border-radius: 13px;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Status Anzeige */
+        #status-indicator {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .offline { border: 1px solid #444; color: #888; }
+        .online { background: #e91916; color: white; animation: pulse 1.5s infinite; box-shadow: 0 0 15px rgba(233, 25, 22, 0.5); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Social Links */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .link-btn {
+            background: #222;
+            border: 1px solid rgba(145, 70, 255, 0.3);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .link-btn:hover {
+            background: var(--twitch-purple);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(145, 70, 255, 0.4);
+        }
+
+        /* Video Container für Twitch Embed */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #222; }
+        tr:last-child td { border: none; }
+        td:first-child { color: var(--twitch-purple); font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Schnico</h1>
+        <div id="status-indicator" class="offline">Offline</div>
+    </header>
+
+    <div class="animated-card">
+        <div class="card-content">
+            <h2>Live auf Twitch</h2>
+            <div class="video-container">
+                <iframe 
+                    src="https://player.twitch.tv/?channel=schnicovtuber&parent=schnico-website.vercel.app/" 
+                    frameborder="0" 
+                    allowfullscreen="true" 
+                    scrolling="no" 
+                    height="378" 
+                    width="620">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <div class="animated-card">
+        <div class="card-content">
+            <h2>Links & Socials</h2>
+            <div class="links-grid">
+                <a href="https://www.twitch.tv/schnicovtuber/" target="_blank" class="link-btn">Twitch</a>
+                <a href="https://www.youtube.com/@SchnicoVtuber" target="_blank" class="link-btn">YouTube</a>
+                <a href="https://discord.gg/g57wbkykA8" target="_blank" class="link-btn">Discord</a>
+                <a href="https://www.instagram.com/schnicovtuber/" target="_blank" class="link-btn">Instagram</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="animated-card">
+        <div class="card-content">
+            <h2>Über mich</h2>
+            <p><strong>Schnico hier – deutscher VTuber!</strong></p>
+            <p>Größtenteils Gaming, und ab und zu (wenn Lust besteht) Musik.</p>
+            <p>Derzeit im Programm:<br>
+               🟩 <strong>Minecraft Hardcore</strong> – Die Welt öfter verloren als mein Wille zu leben.<br>
+               🟣 <strong>Destiny 2</strong> – Yippie<br>
+               🦇 <strong>Batman: Arkham Knight</strong> – Hotkey-Challenge (Grenzenloses Leiden)
+            </p>
+        </div>
+    </div>
+
+    <div class="animated-card">
+        <div class="card-content">
+            <h2>Stream-Zeiten</h2>
+            <table>
+                <tr><td>Mo - Mi</td><td>Ab 18:00 Uhr</td></tr>
+                <tr><td>Wochenende</td><td>Open End</td></tr>
+                <tr><td>Donnerstag</td><td>Pause / Spontan</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Kleiner Trick für den Status ohne API-Key (simuliert)
+        // Um es echt zu machen, bräuchtest du ein Backend oder die Twitch API
+        async function checkTwitchStatus() {
+            const statusBox = document.getElementById('status-indicator');
+            // Für den Anfang lassen wir es manuell oder zeigen "Offline" 
+            // bis du einen API-Key hast.
+            const isLive = false; 
+
+            if(isLive) {
+                statusBox.innerText = "● LIVE";
+                statusBox.className = "online";
+            } else {
+                statusBox.innerText = "Offline";
+                statusBox.className = "offline";
+            }
+        }
+        checkTwitchStatus();
+    </script>
+
+</body>
+</html>
